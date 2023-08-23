@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     data_begin: DataTypes.DATEONLY
   }, {});
   Classes.associate = function(models) {
-    Classes.hasMany(models.registration, {
+    Classes.hasMany(models.Registration, {
       foreignKey: 'class_id'
     })
     Classes.belongsTo(models.People, {

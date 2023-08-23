@@ -58,6 +58,67 @@ class PeopleController {
             return res.status(500).json(error.message)
         }
     }
+
+    static async pegaUmaMatricula(req, res){
+        const { studentId, registrationId } = req.params
+        try{
+            const umaMatricula = await database.Registration.findOne({
+                where: {
+                    id: Number(registrationId),
+                    student_id: Number(studentId)
+                }
+            })
+            return res.status(200).json(umaMatricula)
+        }catch(error){
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async criaMatricula(req, res){
+        const { studentId } = req.params
+        const novaMatricula = { ...req.body, student_id: Number(studentId) }
+        try{
+            const novaMatriculaCriada = await database.Registration.create(novaMatricula)
+            return res.status(200).json(novaMatriculaCriada)
+        }catch(error){
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async atualizaMatricula(req, res){
+        const { studentId, registrationId } = req.params
+        const atualizarMatricula = req.body
+
+        try{
+            await database.Registration.update(atualizarMatricula, {
+                where: {
+                    id: Number(registrationId),
+                    student_id: Number(studentId)
+                }
+            })
+            const matriculaAtualizada = await database.Registration.findOne( { 
+                where: {id: Number(registrationId)
+            }})
+            return res.status(200).json(matriculaAtualizada)
+        } catch(error){
+            return res.status(500).json(error.message)
+        }
+    }
+
+    static async apagaMatricula(req, res){
+        const { studentId, registrationId } = req.params
+        try{
+            await database.Registration.destroy(
+                {
+                    where: 
+                    {id: Number(registrationId)}
+                }
+            )
+            return res.status(200).json({message: "Registration deleted!"})
+        } catch(error){
+            return res.status(500).json(error.message)
+        }
+    }
 }
 
 module.exports = PeopleController;
