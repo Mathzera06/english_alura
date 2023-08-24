@@ -13,5 +13,6 @@ router.post('/people/:studentId/registration', PeopleController.criaMatricula)
 router.put('/people/:id', PeopleController.atualizaPessoa)
 router.put('/people/:studentId/registration/:registrationId', PeopleController.atualizaMatricula)
 router.delete('/people/:studentId/registration/:registrationId', PeopleController.apagaMatricula)
+router.post('/people/:id/restaura', PeopleController.restauraPessoa)
 
 module.exports = router;
